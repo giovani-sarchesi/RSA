@@ -61,7 +61,7 @@ namespace RSA
                 }
 
                 //Achando divisores para encontrar o valor de D
-                for(int y = 17; y <= 100; y++)
+                for(int y = 5; y <= 100; y++)
                 {
                     fatoracaoD.Clear();
                     valoresIguais.Clear();
