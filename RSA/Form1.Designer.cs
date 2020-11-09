@@ -272,6 +272,7 @@
             this.txtCriptografado.ReadOnly = true;
             this.txtCriptografado.Size = new System.Drawing.Size(359, 23);
             this.txtCriptografado.TabIndex = 15;
+            this.txtCriptografado.TextChanged += new System.EventHandler(this.txtCriptografado_TextChanged);
             // 
             // lblDescriptografado
             // 

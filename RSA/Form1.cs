@@ -117,9 +117,10 @@ namespace RSA
             {
                 textoCriptografado = "";
                 textoDescriptografado = "";
-                //byte[] bytesTextoOriginal;
-                //byte[] bytesTextoCriptografado;
-                //byte[] bytesTextoDescriptografado;
+                List<int> original = new List<int>();
+                List<int> cripto = new List<int>();
+                List<int> descripto = new List<int>();
+
 
                 if (E == 0 || D == 0 || N == 0)
                 {
@@ -132,30 +133,45 @@ namespace RSA
 
                 textoOriginal = txtOriginal.Text;
 
-                long resultado = 1;
-                for(int i = 0; i < D; i++)
+                //texto original em ascii
+                foreach (char c in textoOriginal)
                 {
-                    resultado = resultado * Convert.ToInt64(textoOriginal);
+                    original.Add((int)System.Convert.ToInt32(c));
                 }
 
-                textoCriptografado = textoCriptografado + (resultado % N);
-
-                txtCriptografado.Text = textoCriptografado;
-
-                resultado = 1;
-                for (int i = 0; i < E; i++)
+                //Criptografar texto
+                foreach (int n in original)
                 {
-                    resultado = resultado * Convert.ToInt64(textoCriptografado);
+                    cripto.Add((int)(Math.Pow(n, E) % N));
                 }
 
-                textoDescriptografado = textoDescriptografado + (resultado % N);
+                //Descripar
+                foreach (int n in cripto)
+                {
+                    descripto.Add((int)(Math.Pow(n, D) % N));
+                }
 
-                txtDescriptografado.Text = textoDescriptografado;
+                //Escrever na tela
+                foreach(ulong n in cripto)
+                {
+                    txtCriptografado.Text += Convert.ToChar(n);
+                }
+
+                foreach (ulong n in descripto)
+                {
+                    txtDescriptografado.Text += Convert.ToChar(n);
+                }
+
             }
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void txtCriptografado_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
