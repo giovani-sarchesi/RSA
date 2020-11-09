@@ -118,8 +118,8 @@ namespace RSA
                 textoCriptografado = "";
                 textoDescriptografado = "";
                 List<int> original = new List<int>();
-                List<int> cripto = new List<int>();
-                List<int> descripto = new List<int>();
+                List<ulong> cripto = new List<ulong>();
+                List<ulong> descripto = new List<ulong>();
 
 
                 if (E == 0 || D == 0 || N == 0)
@@ -142,24 +142,28 @@ namespace RSA
                 //Criptografar texto
                 foreach (int n in original)
                 {
-                    cripto.Add((int)(Math.Pow(n, E) % N));
+                    ulong pot = Potencia((ulong)n, E);
+                    ulong x = pot % (ulong)N;
+                    cripto.Add(x);
                 }
 
                 //Descripar
                 foreach (int n in cripto)
                 {
-                    descripto.Add((int)(Math.Pow(n, D) % N));
+                    ulong pot = (ulong)(Math.Pow(n, D));
+                    ulong x = pot % (ulong)N;
+                    descripto.Add(x);
                 }
 
                 //Escrever na tela
-                foreach(ulong n in cripto)
+                foreach(int n in cripto)
                 {
-                    txtCriptografado.Text += Convert.ToChar(n);
+                    txtCriptografado.Text += n;
                 }
 
-                foreach (ulong n in descripto)
+                foreach (int n in descripto)
                 {
-                    txtDescriptografado.Text += Convert.ToChar(n);
+                    txtDescriptografado.Text += n;
                 }
 
             }
@@ -173,5 +177,17 @@ namespace RSA
         {
 
         }
+
+        public ulong Potencia(ulong n, int vezes)
+        {
+            ulong total = 1;
+            for(int i = 1; i < vezes; i++)
+            {
+                total *= n;
+            }
+
+            return total;
+        }
+
     }
 }
