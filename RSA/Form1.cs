@@ -96,7 +96,7 @@ namespace RSA
                 //Achando o valor de E
                 for (int j = 1; j < Z; j++)
                 {
-                    if (j * D % Z == 1)
+                    if ((j * D) % Z == 1)
                     {
                         E = j;
                         txtE.Text = E.ToString();
@@ -115,6 +115,8 @@ namespace RSA
         {
             try
             {
+                txtCriptografado.Text = "";
+                txtDescriptografado.Text = "";
                 textoCriptografado = "";
                 textoDescriptografado = "";
                 List<int> original = new List<int>();
@@ -142,7 +144,7 @@ namespace RSA
                 //Criptografar texto
                 foreach (int n in original)
                 {
-                    ulong pot = Potencia((ulong)n, E);
+                    ulong pot = (ulong)Math.Pow(n, E);
                     ulong x = pot % (ulong)N;
                     cripto.Add(x);
                 }
@@ -150,7 +152,7 @@ namespace RSA
                 //Descripar
                 foreach (int n in cripto)
                 {
-                    ulong pot = (ulong)(Math.Pow(n, D));
+                    ulong pot = (ulong)Math.Pow(n, D);
                     ulong x = pot % (ulong)N;
                     descripto.Add(x);
                 }
@@ -178,16 +180,6 @@ namespace RSA
 
         }
 
-        public ulong Potencia(ulong n, int vezes)
-        {
-            ulong total = 1;
-            for(int i = 1; i < vezes; i++)
-            {
-                total *= n;
-            }
-
-            return total;
-        }
 
     }
 }
